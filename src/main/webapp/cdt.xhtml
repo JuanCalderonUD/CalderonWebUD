@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>Simulador CDT</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"/>
+</h:head>
+
+<h:body>
+
+<div class="container mt-5">
+
+    <h:form>
+
+        
+        <h:messages globalOnly="true" styleClass="alert alert-danger"/>
+
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h4>Simulador CDT</h4>
+            </div>
+
+            <div class="card-body">
+
+                
+                <div class="mb-3">
+                    <label class="form-label">Inversión</label>
+
+                    <h:inputText id="inversion"
+					    value="#{cdt.dto.inversion}"
+					    required="true"
+					    requiredMessage="Campo inversión obligatorio"
+					    converterMessage="Ingrese un número válido"
+					    styleClass="form-control">
+					
+					    <f:validateDoubleRange minimum="10000"/>
+					
+					</h:inputText>
+
+                    <h:message for="inversion" styleClass="text-danger"/>
+                </div>
+
+               
+                <div class="mb-3">
+                    <label class="form-label">Tipo CDT</label>
+
+                    <h:selectOneMenu id="tipo"
+                        value="#{cdt.dto.tipoCDT}"
+                        required="true"
+                        requiredMessage="Seleccione un tipo"
+                        styleClass="form-select">
+
+                        <f:selectItem itemLabel="-- Seleccione --" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Mensual" itemValue="Mensual"/>
+                        <f:selectItem itemLabel="Trimestral" itemValue="Trimestral"/>
+                        <f:selectItem itemLabel="Semestral" itemValue="Semestral"/>
+                        <f:selectItem itemLabel="Anual" itemValue="Anual"/>
+
+                    </h:selectOneMenu>
+
+                    <h:message for="tipo" styleClass="text-danger"/>
+                </div>
+
+                <!-- 🔹 BOTÓN-->
+                <div class="d-grid">
+                    <h:commandButton value="Calcular"
+                                     action="#{cdt.calcular}"
+                                     styleClass="btn btn-success"/>
+                </div>
+
+            </div>
+        </div>
+
+        
+        <h:panelGroup rendered="#{not empty cdt.dto.lista}">
+
+            <div class="card mt-5 shadow-lg">
+                <div class="card-header bg-dark text-white text-center">
+                    <h5>Resultados</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <h:dataTable value="#{cdt.dto.lista}" var="f"
+                                 styleClass="table table-striped text-center">
+
+                        <h:column>
+                            <f:facet name="header">Tipo</f:facet>
+                            #{f.tipo}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Días</f:facet>
+                            #{f.dias}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Tasa</f:facet>
+                            #{f.tasa}
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Ganancia</f:facet>
+                            <h:outputText value="#{f.gananciaNeta}">
+                                <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Total</f:facet>
+                            <h:outputText value="#{f.valorFinal}">
+                                <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
+                        </h:column>
+
+                    </h:dataTable>
+
+                </div>
+            </div>
+
+        </h:panelGroup>
+
+    </h:form>
+
+    
+    <h:outputLink value="index.xhtml" styleClass="btn btn-secondary mt-3">
+        Volver
+    </h:outputLink>
+
+</div>
+
+<footer class="text-center mt-5 p-3 bg-light">
+    <h:outputText value="Juan David Calderón Cárdenas - Programación avanzada - Grupo 301 - Universidad Distrital Francisco Jose de Caldas - 2026"/>
+</footer>
+
+</h:body>
+</html>

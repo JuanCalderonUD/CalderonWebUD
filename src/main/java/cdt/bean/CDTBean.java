@@ -1,9 +1,8 @@
+//Juan David Calderon Cardenas
 package cdt.bean;
 
 import java.io.Serializable;
-
 import cdt.modelo.CDT;
-
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
@@ -15,15 +14,8 @@ public class CDTBean implements Serializable {
 
     private CDT dto = new CDT();
 
-    public CDTBean() {}
-
-    public CDT getDto() {
-        return dto;
-    }
-
-    public void setDto(CDT dto) {
-        this.dto = dto;
-    }
+    public CDT getDto() { return dto; }
+    public void setDto(CDT dto) { this.dto = dto; }
 
     public void calcular() {
         dto.calcular();
